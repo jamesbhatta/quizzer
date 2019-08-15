@@ -7,7 +7,7 @@
 	@include('partials.alerts')
 	
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<div class="card">
 				<div class="card-header purple-gradient white-text">Courses</div>
 				<div class="card-body">
@@ -41,15 +41,16 @@
 			{{-- End of Course card --}}
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-7">
 			<div class="card">
-				<div class="card-header aqua-gradient white-text">Courses</div>
+				<div class="card-header aqua-gradient white-text">Chapters</div>
 				<div class="card-body">
-					<table class="table table-hover">
+					<table class="table table-hover table-sm">
 						<thead class="aqua-gradient white-text">
 							<tr>
 								<th>#</th>
 								<th>Title</th>
+								<th>Course</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -58,6 +59,7 @@
 							<tr>
 								<th scope="row">{{ $loop->iteration }}</th>
 								<td>{{ $chapter->title }}</td>
+								<td>{{ $chapter->course->name }}</td>
 								<td>
 									<a href=""><i class="fa fa-trash-restore text-success mr-4"></i></a> &nbsp;
 									<a href=""><i class="fa fa-backspace text-warning"></i></a>

@@ -122,8 +122,16 @@
 							</p>
 						</td>
 						<td>
-							<a href="" class="btn btn-link"><i class="fa fa-pen text-secondary"></i></a> 
-							<a href="" class="btn btn-link"><i class="fa fa-minus text-danger"></i></a>
+							<a href="{{ route('questions.destroy', $question->id) }}" class="btn btn-link">
+								<i class="fa fa-pen text-secondary" data-toggle="tooltip" title="Edit"></i>
+							</a> 
+							<form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="d-inline">
+								@csrf
+								@method('delete')
+								<button type="submit" class="btn btn-link p-0" data-toggle="tooltip" title="Remove">
+									<i class="far fa-times-circle text-danger"></i>
+								</button>
+							</form>
 						</td>
 					</tr>
 
@@ -132,7 +140,7 @@
 					@endforelse
 				</tbody>
 			</table>
-			
+
 			<div class="paginate-center">
 				{{ $questions->links() }}
 			</div>
@@ -144,7 +152,7 @@
 @push('scripts')
 <script>
 	$(document).ready(function () {
-		
+
 		$('#addQuestionBtn').on('click',function(){
 			$('#addQuestionCard').toggle();
 		});

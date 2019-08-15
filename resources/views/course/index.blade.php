@@ -62,14 +62,19 @@
 							@endif
 							<tr>
 								<th scope="row">{{ $count }}</th>
-								<td>{{ $course->name }}</td>
+								<td>
+									<a href="{{ route('viewcourse', $course->id) }}">{{ $course->name }}</a>
+								</td>
 								<td>@if ($course->visible) Yes @else No @endif</td>
 								<td>
-									<a data-toggle="modal" data-target="#courseModal-{{ $course->id }}" class="btn btn-link py-0"><i class="fa fa-pen text-secondary"></i></a>
+									<a data-toggle="modal" data-target="#courseModal-{{ $course->id }}" class="btn btn-link py-0" >
+										<i class="fa fa-pen text-secondary" data-toggle="tooltip" title="Edit"></i>
+									</a>
+
 									<form action="{{ route('course.destroy', $course->id) }}" method="POST" class="form d-inline">
 										@csrf
 										@method('delete')
-										<button type="submit" onClick="return confirm('Connfirm to delete?');" class="btn btn-link p-0"><i class="far fa-trash-alt text-danger"></i></button>
+										<button type="submit" onClick="return confirm('Connfirm to delete?');" class="btn btn-link p-0" data-toggle="tooltip" title="Trash"><i class="far fa-trash-alt text-danger"></i></button>
 									</form>
 								</td>
 							</tr>

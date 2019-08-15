@@ -61,7 +61,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3">
       © {{ date('Y') }} Copyright
-      <a href="" target="_blank"> &nbsp; The Runtime Terrors [ BCA 8<sup>th</sup> ] </a>
+      <a href="{{ route('dashboard') }}" target="_blank"> &nbsp; The Runtime Terrors [ BCA 8<sup>th</sup> ] </a>
     </div>
     <!--/.Copyright-->
 
@@ -87,6 +87,9 @@
   <script type="text/javascript">
     // Animations initialization
     new WOW().init();
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   </script>
 
 </body>

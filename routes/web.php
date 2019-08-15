@@ -65,6 +65,7 @@ Route::get('/dashboard/chartsecond', function(){
 Route::prefix('dashboard')->middleware('auth')->group(function () {
 	Route::resource('course', 'CourseController');
 	Route::resource('chapter', 'ChapterController');
+	Route::get('viewcourse/{course_id}', 'ChapterController@index')->name('viewcourse');
 	Route::resource('questions', 'QuestionController');
 	Route::get('trash', 'TrashController@index')->name('trash');
 });

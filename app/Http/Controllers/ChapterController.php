@@ -18,12 +18,13 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($course_id = null)
     {
+        $selectCourse =  Course::select('name')->find($course_id);
         $chapters = Chapter::with('course')->orderBy('id', 'desc')->get();
         $courses = Course::select(['id', 'name'])->get();
 
-        return view('chapter.index', compact(['chapters', 'courses']));
+        return view('chapter.index', compact(['chapters', 'courses', 'selectCourse']));
     }
 
     /**
@@ -105,6 +106,8 @@ class ChapterController extends Controller
      */
     public function destroy(Chapter $chapter)
     {
-        //
+        $chapter->delete();
+        session()->flash('success', 'Chapter Trashed Successfully!');
+        return redirect()->route('chapter.index');
     }
 }

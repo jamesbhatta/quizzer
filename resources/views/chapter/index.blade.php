@@ -57,7 +57,7 @@
 				</div>
 				<div class="card-body">
 
-					<table id="chaptersTable" class="table table-hover">
+					<table id="chaptersTable" class="table table-hover table-sm">
 						<!-- Table head -->
 						<thead class="secondary-color lighten-4 text-white">
 							<tr>
@@ -80,13 +80,19 @@
 								<td>{{ $chapter->weight }}</td>
 								<td>{{ $chapter->course->name }}</td>
 								<td>
-									<a data-toggle="modal" data-target="#chapterModal-{{ $chapter->id }}" class="btn btn-link"><i class="fa fa-pen text-secondary"></i></a>
-									<a href="" class="btn btn-link"><i class="fa fa-trash-alt text-danger"></i></a>
+									<a data-toggle="modal" data-target="#chapterModal-{{ $chapter->id }}" class="btn btn-link py-0"><i class="fa fa-pen text-secondary"></i></a>
+									
+									<form action="{{ route('chapter.destroy', $chapter->id) }}" method="POST" class="form d-inline">
+										@csrf
+										@method('delete')
+										<button type="submit" onClick="return confirm('Connfirm to delete?');" class="btn btn-link p-0" data-toggle="tooltip" title="Trash"><i class="far fa-trash-alt text-danger"></i></button>
+									</form>
+
 								</td>
 							</tr>
 							@empty
 							<tr>
-								<td colspan="4" class="text-center font-italic">No Courses found !!</td>
+								<td colspan="4" class="text-center font-italic">No Chapters found !!</td>
 							</tr>
 							@endforelse
 						</tbody>
@@ -150,12 +156,19 @@
 		$('.dataTables_length').addClass('bs-select');
 
 		$('#filterCourse').on('change',function(){
-			console.log('triggered');
+			console.log('Filtering by course');
 			var selectedValue = $(this).val();
 			chaptersTable.fnFilter("^"+selectedValue+"$", 3, true); //Exact value, column, reg
 			// chaptersTable.search(selectedValue, 3, true).draw();
 		});
 
+		@if (isset($selectCourse))
+		console.log('Course ID set {{ $selectCourse->name }}');
+		var selectedValue = '{{ $selectCourse->name }}';
+		console.log('selected Value: ' + selectedValue);
+		$('#filterCourse').find('option[value="'+ selectedValue+'"]').attr("selected",true);
+		chaptersTable.fnFilter("^"+selectedValue+"$", 3, true);
+		@endif
 	});
 </script>
 @endpush

@@ -125,6 +125,8 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        session()->flash('success', 'Question has been Removed.');
+        return redirect()->back();
     }
 }

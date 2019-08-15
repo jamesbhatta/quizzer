@@ -10,14 +10,14 @@ class TrashController extends Controller
 {
     public function index()
     {
+        $heading = 'Trash Box';
     	$courses = Course::select('id', 'name')->orderBy('deleted_at', 'desc')->onlyTrashed()->get();
-    	$chapters = Chapter::select('id', 'title')->orderBy('deleted_at', 'desc')->onlyTrashed()->get();
+        $chapters = Chapter::with('course')->orderBy('deleted_at', 'desc')->onlyTrashed()->get();
 
-    	$heading = 'Trash Box';
-    	return view('trash.index', compact([
-    		'heading',
-    		'courses',
-    		'chapters'
-    	]));
+        return view('trash.index', compact([
+          'heading',
+          'courses',
+          'chapters'
+      ]));
     }
 }

@@ -100,7 +100,6 @@ class CourseController extends Controller
      */
     public function destroy(Request $request, Course $course)
     {
-        // Do not allow to delete courses cotaining chapters
         $course->delete();
         $request->session()->flash('success', 'Course Trashed Successfully!');
         return redirect()->route('course.index');
