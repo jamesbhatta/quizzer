@@ -27,7 +27,7 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark secondary-color">
   <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Quizzer</a>
+  <a class="navbar-brand" href="/">Quizzer</a>
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
   aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,16 +38,22 @@
 <div class="collapse navbar-collapse" id="basicExampleNav">
   <ul class="navbar-nav ml-auto">
     <li class="nav-item active">
-      <a class="nav-link" href="#">Home
+      <a class="nav-link" href="#"><i class="fa fa-home mr-1"></i>Home
         <span class="sr-only">(current)</span>
       </a>
     </li>
+    @auth
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-qrcode mr-1"></i>Dashboard</a>
+    </li>
+    @else
     <li class="nav-item">
       <a class="nav-link" href="{{ route('login') }}">Login</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{ route('register') }}">Register</a>
     </li>
+    @endauth
   </ul>
 </div>
 <!-- Collapsible content -->

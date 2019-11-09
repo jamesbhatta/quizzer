@@ -104,4 +104,18 @@ class CourseController extends Controller
         $request->session()->flash('success', 'Course Trashed Successfully!');
         return redirect()->route('course.index');
     }
+
+    public function untrash(Request $request, $course_id)
+    {
+        $course = Course::withTrashed()->where('id', $course_id)->restore();
+        $request->session()->flash('success', 'Course untrashed successfully!');
+        return redirect()->back();
+    }
+
+    public function hardDelete(Request $request, $course_id)
+    {
+        $course = Course::withTrashed()->where('id', $course_id)->forceDelete();
+        $request->session()->flash('success', 'Course permanently deleted!');
+        return redirect()->back();
+    }
 }

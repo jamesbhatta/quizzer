@@ -15,7 +15,24 @@ class ExampleTest extends TestCase
     public function testBasicTest()
     {
         $response = $this->get('/');
-
         $response->assertStatus(200);
     }
+
+    public function test_login_route_is_working()
+    {
+        $response = $this->get('/login');
+        $response->assertStatus(200);
+    }
+
+    public function test_register_route_is_working()
+    {
+        $response = $this->get('/register');
+        $response->assertStatus(200);
+    }
+
+    public function test_dashboard_route_requires_login()
+    {
+        $response = $this->get('/dashboard')->assertRedirect('/login');
+    }
+
 }

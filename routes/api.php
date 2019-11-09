@@ -14,8 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
 
 Route::get('get_chapters_by_course/{course_id}', 'ApiController@getChaptersByCourse');
 
+
+Route::get('courses', function (){
+	return \App\Course::all();
+});

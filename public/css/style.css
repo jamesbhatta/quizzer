@@ -1,3 +1,7 @@
 .paginate-center .pagination{
 	justify-content: center;
 }
+
+.complete{
+	display: none;
+}

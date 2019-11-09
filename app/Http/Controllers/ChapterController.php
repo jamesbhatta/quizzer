@@ -110,4 +110,18 @@ class ChapterController extends Controller
         session()->flash('success', 'Chapter Trashed Successfully!');
         return redirect()->route('chapter.index');
     }
+
+    public function untrash(Request $request, $chapter_id)
+    {
+        $chapter = Chapter::withTrashed()->where('id', $chapter_id)->restore();
+        $request->session()->flash('success', 'Chapter untrashed successfully!');
+        return redirect()->back();
+    }
+
+    public function hardDelete(Request $request, $chapter_id)
+    {
+        $chapter = Chapter::withTrashed()->where('id', $chapter_id)->forceDelete();
+        $request->session()->flash('success', 'Chapter permanently deleted!');
+        return redirect()->back();
+    }
 }

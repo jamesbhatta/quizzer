@@ -25,8 +25,20 @@
 								<th scope="row">{{ $loop->iteration }}</th>
 								<td>{{ $course->name }}</td>
 								<td>
-									<a href=""><i class="fa fa-trash-restore text-success mr-4"></i></a> &nbsp;
-									<a href=""><i class="fa fa-backspace text-warning"></i></a>
+									<form action="{{ route('course.untrash', $course->id) }}" method="POST" class="d-inline">
+										@csrf
+										<button type="submit" class="btn btn-link m-0 p-0" data-toggle="tooltip" title="Untrash">
+											<i class="fa fa-trash-restore text-success mr-4"></i>
+										</button>
+									</form>
+									<form action="{{ route('course.harddelete', $course->id) }}" method="POST" class="d-inline">
+										@csrf
+										@method('delete')
+										<button type="submit" class="btn btn-link m-0 p-0" data-toggle="tooltip" title="Delete">
+											<i class="fa fa-backspace text-warning"></i>
+										</button>
+									</form>
+
 								</td>
 							</tr>
 							@empty
@@ -61,8 +73,19 @@
 								<td>{{ $chapter->title }}</td>
 								<td>{{ $chapter->course->name }}</td>
 								<td>
-									<a href=""><i class="fa fa-trash-restore text-success mr-4"></i></a> &nbsp;
-									<a href=""><i class="fa fa-backspace text-warning"></i></a>
+									<form action="{{ route('chapter.untrash', $chapter->id) }}" method="POST" class="d-inline">
+										@csrf
+										<button type="submit" class="btn btn-link m-0 p-0" data-toggle="tooltip" title="Untrash">
+											<i class="fa fa-trash-restore text-success mr-4"></i>
+										</button>
+									</form>
+									<form action="{{ route('chapter.harddelete', $chapter->id) }}" method="POST" class="d-inline">
+										@csrf
+										@method('delete')
+										<button type="submit" class="btn btn-link m-0 p-0" data-toggle="tooltip" title="Delete">
+											<i class="fa fa-backspace text-warning"></i>
+										</button>
+									</form>
 								</td>
 							</tr>
 							@empty

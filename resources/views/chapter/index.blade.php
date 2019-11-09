@@ -76,11 +76,11 @@
 							@forelse ( $chapters as $chapter )
 							<tr>
 								<th scope="row">{{ $loop->iteration }}</th>
-								<td><a href="{{ route('chapter.show', $chapter->id) }}">{{ $chapter->title }}</a></td>
+								<td><a href="{{ route('chapter.show', $chapter->id) }}" data-toggle="tooltip" title="view">{{ $chapter->title }}</a></td>
 								<td>{{ $chapter->weight }}</td>
 								<td>{{ $chapter->course->name }}</td>
 								<td>
-									<a data-toggle="modal" data-target="#chapterModal-{{ $chapter->id }}" class="btn btn-link py-0"><i class="fa fa-pen text-secondary"></i></a>
+									<a data-toggle="modal" data-target="#chapterModal-{{ $chapter->id }}" class="btn btn-link py-0" title="Edit"><i class="fa fa-pen text-secondary"></i></a>
 									
 									<form action="{{ route('chapter.destroy', $chapter->id) }}" method="POST" class="form d-inline">
 										@csrf

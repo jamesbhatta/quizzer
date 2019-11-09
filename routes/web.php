@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware(['auth', 'admin']);
 
 Route::get('/dashboard/chart', function(){
 	$result = DB::table('chapters')
@@ -52,20 +52,26 @@ Route::get('/dashboard/chartsecond', function(){
 	// return response()->json($result);
 });
 
-
-// Route::get('/dashboard', function() { 
-// 	return view('layouts.app'); 
-// })->name('dashboard');
-
-// Route::get('/dashboard/{any}', function() { 
-// 	return view('layouts.app'); 
-// })->where('any', '(.*)');
-
-
-Route::prefix('dashboard')->middleware('auth')->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'admin'])->group(function () {
 	Route::resource('course', 'CourseController');
 	Route::resource('chapter', 'ChapterController');
 	Route::get('viewcourse/{course_id}', 'ChapterController@index')->name('viewcourse');
 	Route::resource('questions', 'QuestionController');
+	
+	Route::get('content', 'ContentController@index')->name('content.index');
+	Route::get('content/create/{chapter_id}', 'ContentController@create')->name('content.create');
+	Route::post('content', 'ContentController@store')->name('content.store');
+	Route::get('content/{content}/edit', 'ContentController@edit')->name('content.edit');
+	Route::post('content/{content}', 'ContentController@update')->name('content.update');
+	// Route::resource('content', 'ContentController');
+	
+	Route::get('settings', 'DashboardController@settings')->name('settings');
+	Route::post('settings', 'DashboardController@saveSettings')->name('settings.save');
 	Route::get('trash', 'TrashController@index')->name('trash');
+
+	Route::post('course/{id}/untrash', 'CourseController@untrash')->name('course.untrash');
+	Route::delete('course/{id}/hard-delete', 'CourseController@hardDelete')->name('course.harddelete');
+
+	Route::post('chapter/{id}/untrash', 'ChapterController@untrash')->name('chapter.untrash');
+	Route::delete('chapter/{id}/hard-delete', 'ChapterController@hardDelete')->name('chapter.harddelete');
 });

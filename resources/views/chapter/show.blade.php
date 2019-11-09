@@ -7,6 +7,9 @@
 		<div class="card-header bg-secondary white-text">
 			<h4 class="h4 d-inline align-middle">{{ $chapter->course->name }} <i class="fa fa-angle-double-right"></i> {{ $chapter->title }}</h4>
 			<button class="btn btn-success" id="addQuestionBtn">Add Questions</button>
+			@if (! $chapter->content)
+			<a href="{{ route('content.create', $chapter->id) }}" class="btn btn-info">Add Content</a>
+			@endif
 		</div>
 	</div>
 
@@ -87,13 +90,43 @@
 				{{-- End of form row --}}
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-secondary rounded-0 waves-effect float-right">Add Chapter</button>
+					<button type="submit" class="btn btn-secondary rounded-0 waves-effect float-right">Add Question</button>
 					<button type="reset" class="btn btn-danger rounded-0 float-right">Clear</button>
 				</div>
 			</form>
 		</div>
 	</div>
 	{{-- End of New Question Card --}}
+
+	{{-- Content Card --}}
+	@if ($chapter->content)
+	<div id="accordion">
+		<div class="card mb-3">
+			<div class="card-header bg-white">
+				<h3 class="h3-responsive d-inline" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					Content
+				</h3>
+				<a href="{{ route('content.edit', $chapter->content->id) }}" class="float-right"><i class="fa fa-edit mr-2"></i>Edit</a>
+			</div>
+			<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
+				<div class="card-body mb-5">
+					<div class="p-3">
+						<div class="teaser">
+							{!! substr($chapter->content->content, 0, 150) !!}
+						</div>
+						<div class="complete">
+							{!! $chapter->content->content !!}
+						</div>
+						<button id="show-more" class="btn btn-primary rounded-0">Show More</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	@endif
+	{{-- End of Content Card --}}
 
 	<div class="card">
 		<div class="card-body">
@@ -152,6 +185,12 @@
 @push('scripts')
 <script>
 	$(document).ready(function () {
+
+		$('#show-more').click(function() {
+			$('.teaser').hide();
+			$('.complete').show();
+			$(this).hide();
+		});
 
 		$('#addQuestionBtn').on('click',function(){
 			$('#addQuestionCard').toggle();

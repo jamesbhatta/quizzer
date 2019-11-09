@@ -1,17 +1,10 @@
 @extends('layouts.app')
 
-
-
 @section('content')
-@push('styles')
-{{-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet"> --}}
-{{-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js" defer></script> --}}
-@endpush
-
 <div class="container-fluid mt-5">
 
     <!-- Heading -->
-    <div class="card mb-4 wow fadeIn">
+    <div class="card mb-4 wow fadeIn" style="display: none;">
         <div class="card-body d-sm-flex justify-content-between">
             <h4 class="mb-2 mb-sm-0 pt-1">
                 <a href="https://mdbootstrap.com/docs/jquery/" target="_blank">Home Page</a>
@@ -64,19 +57,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-6">
-            {{-- <div class="card">
-                <div class="card-header secondary-color white-text">
-                    <h3 class="">Sticky Note</h3>
-                </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
                 <div class="card-body">
-                    <div class="card">
-                        <textarea name="" id="quickNote" class="border-0" cols="30" rows="10"></textarea>
-                    </div>
-                    <button class="btn btn-secondary">Stick</button>
+                    <canvas id="userChartCanvas"></canvas>
                 </div>
-            </div> --}}
+            </div>
         </div>
 
     </div>
@@ -148,6 +135,8 @@
                 options: {
                     responsive: true,
                     scales: {
+                        xAxes: [{
+                        }],
                         yAxes: [{
                             ticks: {
                                 beginAtZero:true
@@ -158,9 +147,48 @@
             });
         });
 
-        // $('#quickNote').summernote({
-        //     airMode: true,
-        // });
+        function drawUserChartCanvas() {
+            var userChartCanvas = $('#userChartCanvas');
+            var myPregressChart = new Chart(userChartCanvas, {
+                type: 'line',
+                data: {
+                    labels:[
+                    @foreach ($joinedUsers as $users)
+                    '{{ $users->date }}',
+                    @endforeach
+                    ],
+                    datasets: [
+                    {
+                        label: "New Users",
+                        data: [
+                        @foreach ($joinedUsers as $users)
+                        '{{ $users->count }}',
+                        @endforeach
+                        ],
+                        backgroundColor: ['rgba(255, 255, 255, 0)',],
+                        borderColor: ['rgba(51, 181, 229, 1)'],
+                        borderWidth: 1,
+                    },
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    },
+                }
+            });
+        }
+
+        // Initialize
+        drawUserChartCanvas();
+
 
     });
 </script>

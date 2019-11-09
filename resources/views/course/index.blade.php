@@ -63,7 +63,7 @@
 							<tr>
 								<th scope="row">{{ $count }}</th>
 								<td>
-									<a href="{{ route('viewcourse', $course->id) }}">{{ $course->name }}</a>
+									<a href="{{ route('viewcourse', $course->id) }}" data-toggle="tooltip" title="View Chapters">{{ $course->name }}</a>
 								</td>
 								<td>@if ($course->visible) Yes @else No @endif</td>
 								<td>
